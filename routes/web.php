@@ -45,12 +45,12 @@ Route::get('/ticket', function () { return view('ticket'); })->name('ticket');
 // ==========================================
 Route::prefix('admin')->name('admin.')->group(function () {
     
-    // Dashboard (Langsung return view karena controllernya belum ada)
+    // Dashboard
     Route::get('/dashboard', function () { 
         return view('admin.dashboard'); 
     })->name('dashboard');
 
-    // Events (Menggunakan Resource Controller)
+    // Events
     Route::resource('events', AdminEventController::class);
 
     // Transactions
@@ -58,10 +58,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.transactions'); 
     })->name('transactions.index');
     
-    // Categories (SUDAH DIPERBAIKI: Mengambil data Kategori dari Database)
+    // Categories (DENGAN JEBAKAN ERROR)
     Route::get('/categories', function () { 
-        $categories = \App\Models\Category::latest()->get();
-        return view('admin.categoris.index', compact('categories')); 
+        try {
+            $categories = \App\Models\Category::latest()->get();
+            return view('admin.categoris.index', compact('categories')); 
+        } catch (\Exception $e) {
+            // MUNCULKAN ERROR ASLI KE LAYAR
+            dd([
+                'Pesan_Error_Asli' => $e->getMessage(),
+                'Letak_File_Error' => $e->getFile(),
+                'Di_Baris_Ke' => $e->getLine()
+            ]);
+        }
     })->name('categories.index');
     
 });
