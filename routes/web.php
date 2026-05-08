@@ -32,7 +32,7 @@ Route::view('/kontak', 'kontak')->name('kontak');
 
 
 // ==========================================
-// RUTE PUBLIK / PENGGUNA (Sama dengan File 2)
+// RUTE PUBLIK / PENGGUNA 
 // ==========================================
 Route::get('/', function () { return view('welcome'); })->name('home');
 Route::get('/event/detail', function () { return view('event-detail'); })->name('event.show');
@@ -41,7 +41,7 @@ Route::get('/ticket', function () { return view('ticket'); })->name('ticket');
 
 
 // ==========================================
-// RUTE SISI ADMIN (Sama dengan File 2)
+// RUTE SISI ADMIN
 // ==========================================
 Route::prefix('admin')->name('admin.')->group(function () {
     
@@ -50,7 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.dashboard'); 
     })->name('dashboard');
 
-    // Events (Menggunakan Resource Controller seperti di File 2)
+    // Events (Menggunakan Resource Controller)
     Route::resource('events', AdminEventController::class);
 
     // Transactions
@@ -58,9 +58,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.transactions'); 
     })->name('transactions.index');
     
-    // Categories
+    // Categories (SUDAH DIPERBAIKI: Mengambil data Kategori dari Database)
     Route::get('/categories', function () { 
-        return view('admin.categoris.index'); 
+        $categories = \App\Models\Category::latest()->get();
+        return view('admin.categoris.index', compact('categories')); 
     })->name('categories.index');
     
 });
