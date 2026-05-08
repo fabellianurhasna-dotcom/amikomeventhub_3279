@@ -48,15 +48,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     // KATEGORI (DENGAN PROTEKSI DATABASE)
     Route::get('/categories', function () { 
-        try {
-            // Coba ambil data kategori
-            $categories = \App\Models\Category::all();
-            return view('admin.categories.index', compact('categories')); 
-        } catch (\Exception $e) {
-            // Jika DB error, kirim variabel kosong saja biar web nggak mati total
-            $categories = collect(); 
-            return view('admin.categories.index', compact('categories'))->with('error', 'Koneksi database bermasalah.');
-        }
-    })->name('categories.index');
+    try {
+        $categories = \App\Models\Category::all();
+
+        return view('admin.categories.index', compact('categories'));
+
+    } catch (\Exception $e) {
+
+        $categories = collect();
+
+        return view('admin.categories.index', compact('categories'))
+            ->with('error', 'Koneksi database bermasalah.');
+    }
+})->name('categories.index');
     
 });
