@@ -1,54 +1,31 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - @yield('title', 'Portal Event')</title>
-    
-    <link rel="stylesheet" href="{{ asset('css/admin-style.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{{ $title ?? 'Admin Dashboard' }} - AmikomEventHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
-<body>
-
-    <div class="admin-wrapper d-flex">
-
-        <aside class="sidebar bg-dark text-white p-3" style="min-height: 100vh; width: 250px;">
-            <h3 class="text-center mb-4">Admin Panel</h3>
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a href="/admin/dashboard" class="nav-link text-white">Dashboard</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="/admin/events" class="nav-link text-white">Kelola Event</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="/admin/tickets" class="nav-link text-white">Pesanan Tiket</a>
-                </li>
-                <li class="nav-item mt-5">
-                    <a href="/" class="nav-link text-danger">Logout</a>
-                </li>
-            </ul>
-        </aside>
-
-        <div class="main-content flex-grow-1">
-
-            <header class="top-navbar bg-light p-3 border-bottom d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Selamat Datang, Admin</h4>
-                <div class="user-profile">
-                    <span class="me-2">Admin Utama</span>
-                    <img src="{{ asset('images/admin-avatar.png') }}" alt="Profile" class="rounded-circle" width="40">
-                </div>
-            </header>
-
-            <main class="container-fluid p-4">
-                @yield('content')
-            </main>
-
+<body class="bg-slate-50 text-slate-900 flex min-h-screen">
+    <aside class="w-64 bg-indigo-900 text-indigo-100 flex flex-col p-6 space-y-8 sticky top-0 h-screen">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-900 font-bold text-xl">AH</div>
+            <span class="text-xl font-bold text-white tracking-tight">AmikomEventHub</span>
         </div>
+        <nav class="flex-1 space-y-2">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-indigo-400 mb-4 px-2">Main Menu</p>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-indigo-800 rounded-xl font-bold transition">Dashboard</a>
+            <a href="{{ route('admin.events.index') }}" class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('events.*') ? 'bg-indigo-800 text-white' : '' }} rounded-xl font-bold transition">
+                Kelola Event
+            </a>
+        </nav>
+    </aside>
 
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/admin-script.js') }}"></script>
+    <main class="flex-1 p-10 overflow-y-auto">
+        @yield('content')
+    </main>
 </body>
 </html>
