@@ -1,42 +1,66 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\EventController as EventAdminController;
 
 // ==========================================
-// RUTE PUBLIK (HALAMAN DEPAN)
+// PANGGILAN CONTROLLER USER
+// ==========================================
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\TicketController;
+
+// ==========================================
+// PANGGILAN CONTROLLER ADMIN
+// ==========================================
+// Gunakan alias 'AdminEventController' agar tidak bentrok dengan EventController milik User
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+// ==========================================
+// RUTE HALAMAN STATIS (NAVBAR)
+// ==========================================
+Route::view('/profil', 'profil')->name('profil');
+Route::view('/katalog', 'katalog')->name('katalog');
+Route::view('/bantuan', 'bantuan')->name('bantuan');
+Route::view('/kontak', 'kontak')->name('kontak');
+
+
+// ==========================================
+// RUTE PUBLIK / PENGGUNA (Sama dengan File 2)
 // ==========================================
 Route::get('/', function () { return view('welcome'); })->name('home');
-Route::get('/profil', function () { return view('profil'); })->name('profil');
-Route::get('/katalog', function () { return view('katalog'); })->name('katalog');
-Route::get('/bantuan', function () { return view('bantuan'); })->name('bantuan');
-Route::get('/kontak', function () { return view('kontak'); })->name('kontak');
-
 Route::get('/event/detail', function () { return view('event-detail'); })->name('event.show');
 Route::get('/checkout', function () { return view('checkout'); })->name('checkout');
 Route::get('/ticket', function () { return view('ticket'); })->name('ticket');
 
+
 // ==========================================
-// RUTE ADMIN (DIGABUNG)
+// RUTE SISI ADMIN (Sama dengan File 2)
 // ==========================================
 Route::prefix('admin')->name('admin.')->group(function () {
     
-    // Dashboard
+    // Dashboard (Langsung return view karena controllernya belum ada)
     Route::get('/dashboard', function () { 
         return view('admin.dashboard'); 
     })->name('dashboard');
 
-    // Events (Menggunakan Resource Controller - Otomatis mencakup index, create, edit, dll)
-    Route::resource('events', EventAdminController::class);
+    // Events (Menggunakan Resource Controller seperti di File 2)
+    Route::resource('events', AdminEventController::class);
 
     // Transactions
     Route::get('/transactions', function () { 
         return view('admin.transactions'); 
-    })->name('transactions');
+    })->name('transactions.index');
     
     // Categories
     Route::get('/categories', function () { 
         return view('admin.categoris.index'); 
     })->name('categories.index');
-
+    
 });
