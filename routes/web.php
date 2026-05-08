@@ -51,11 +51,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         try {
             // Coba ambil data kategori
             $categories = \App\Models\Category::all();
-            return view('admin.categoris.index', compact('categories')); 
+            return view('admin.categories.index', compact('categories')); 
         } catch (\Exception $e) {
             // Jika DB error, kirim variabel kosong saja biar web nggak mati total
             $categories = collect(); 
-            return view('admin.categoris.index', compact('categories'))->with('error', 'Koneksi database bermasalah.');
+            return view('admin.categories.index', compact('categories'))->with('error', 'Koneksi database bermasalah.');
         }
     })->name('categories.index');
     
