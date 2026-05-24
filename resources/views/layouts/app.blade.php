@@ -22,38 +22,50 @@
 
 <body class="bg-slate-50 text-slate-900">
 
-    <nav
-        class="glass sticky top-8 z-40 mx-4 mt-4 px-6 py-4 rounded-2xl border border-white/20 shadow-lg flex justify-between items-center">
+    <nav class="glass sticky top-8 z-40 mx-4 mt-4 px-6 py-4 rounded-2xl border border-white/20 shadow-lg flex justify-between items-center">
+        {{-- LOGO BRAND --}}
         <a href="{{ route('home') }}" class="flex items-center gap-2 hover:opacity-80 transition">
-            <div
-                class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
-                AH</div>
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
+                AH
+            </div>
             <span class="text-xl font-bold tracking-tight">AmikomEventHub</span>
         </a>
         
-        <div class="hidden md:flex gap-8 font-medium">
+        {{-- MENU NAVIGASI TENGAH --}}
+        <div class="hidden md:flex gap-8 font-medium items-center">
             <a href="{{ route('katalog') }}" class="hover:text-indigo-600 transition {{ request()->routeIs('katalog') ? 'text-indigo-600 font-bold' : '' }}">Jelajahi</a>
             
             <a href="{{ route('admin.categories.index') }}" class="hover:text-indigo-600 transition {{ request()->routeIs('admin.categories.index') ? 'text-indigo-600 font-bold' : '' }}">Kategori</a>
             
             <a href="{{ route('profil') }}" class="hover:text-indigo-600 transition {{ request()->routeIs('profil') ? 'text-indigo-600 font-bold' : '' }}">Tentang Kami</a>
         </div>
-        
-        </nav>
 
+        {{-- TOMBOL ADMIN PANEL DI SEBELAH KANAN NAVBAR --}}
+        <div class="flex items-center">
+            <a href="{{ route('admin.dashboard') }}" class="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition flex items-center gap-2 shadow-md">
+                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span>Admin Panel</span>
+            </a>
+        </div>
+    </nav>
+
+    {{-- KONTEN UTAMA HALAMAN --}}
     @yield('content')
 
+    {{-- FOOTER HALAMAN --}}
     <footer class="bg-indigo-900 text-indigo-100 py-20 px-6 mt-20">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="space-y-4 col-span-2">
                 <a href="{{ route('home') }}" class="flex items-center gap-2 hover:opacity-80 transition inline-flex">
-                    <div
-                        class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-900 font-bold text-xl">
-                        AH</div>
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-900 font-bold text-xl">
+                        AH
+                    </div>
                     <span class="text-2xl font-bold text-white">AmikomEventHub</span>
                 </a>
-                <p class="max-w-xs text-indigo-300">Platform reservasi tiket event online terbaik untuk mahasiswa dan
-                    penyelenggara profesional.</p>
+                <p class="max-w-xs text-indigo-300">Platform reservasi tiket event online terbaik untuk mahasiswa dan penyelenggara profesional.</p>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6">Navigasi</h4>
@@ -66,7 +78,7 @@
             <div>
                 <h4 class="text-white font-bold mb-6">Hubungi Kami</h4>
                 <ul class="space-y-4">
-                    <li><a href="{{ route('kontak') }}" class="hover:text-white transition">Kontak Kami</a></li>
+                    <li><a href="{{ route('kontak') }}" class="hover:text-white transition">Contak Kami</a></li>
                     <li>support@eventtiket.com</li>
                     <li>+62 812 3456 7890</li>
                 </ul>

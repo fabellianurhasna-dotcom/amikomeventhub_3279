@@ -2,64 +2,49 @@
 
 use Illuminate\Support\Facades\Route;
 
-// ==========================================
-// PANGGILAN CONTROLLER USER
-// ==========================================
+// Kumpulan Controller User
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\TicketController;
 
-// ==========================================
-// PANGGILAN CONTROLLER ADMIN
-// ==========================================
+// Kumpulan Controller Admin
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
+
+/* --- RUTE DINAMIS PUBLIK --- */
+// Rute utama yang mengambil data event dan partner secara dinamis (Soal 4)
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+/* --- RUTE HALAMAN STATIS USER --- */
+Route::view('/profil', 'layout.profil')->name('profil');
+Route::view('/katalog', 'layout.katalog')->name('katalog');
+Route::view('/bantuan', 'layout.bantuan')->name('bantuan');
+Route::view('/kontak', 'layout.kontak')->name('kontak');
+
+/* --- RUTE DETAIL & TRANSAKSI --- */
+Route::get('/ticket', [TicketController::class, 'show'])->name('ticket');
+Route::view('/event/detail', 'layout.event-detail')->name('event.show');
+Route::view('/checkout', 'layout.checkout')->name('checkout');
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
-// RUTE HALAMAN STATIS
-Route::view('/profil', 'profil')->name('profil');
-Route::view('/katalog', 'katalog')->name('katalog');
-Route::view('/bantuan', 'bantuan')->name('bantuan');
-Route::view('/kontak', 'kontak')->name('kontak');
-
-// RUTE PUBLIK
-Route::get('/', function () { return view('welcome'); })->name('home');
-Route::get('/event/detail', function () { return view('event-detail'); })->name('event.show');
-Route::get('/checkout', function () { return view('checkout'); })->name('checkout');
-Route::get('/ticket', function () { return view('ticket'); })->name('ticket');
-
-// RUTE ADMIN
+/* --- RUTE ADMIN PANEL --- */
 Route::prefix('admin')->name('admin.')->group(function () {
     
-    Route::get('/dashboard', function () { 
-        return view('admin.dashboard'); 
-    })->name('dashboard');
+    // Dashboard Admin Utama
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // CRUD Resource Controller Event (Soal 1 & Soal 2)
     Route::resource('events', AdminEventController::class);
 
-    Route::get('/transactions', function () { 
-        return view('admin.transactions'); 
-    })->name('transactions.index');
+    // 🌟 SEKARANG SUDAH SATU: CRUD Resource Controller Kategori Penuh (Soal 3)
+    Route::resource('categories', CategoryController::class);
+
+    // Daftar Transaksi Admin
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     
-    // KATEGORI (DENGAN PROTEKSI DATABASE)
-    Route::get('/categories', function () { 
-    try {
-        $categories = \App\Models\Category::all();
-
-        return view('admin.categories.index', compact('categories'));
-
-    } catch (\Exception $e) {
-
-        $categories = collect();
-
-        return view('admin.categories.index', compact('categories'))
-            ->with('error', 'Koneksi database bermasalah.');
-    }
-})->name('categories.index');
+    // CRUD Resource Controller Partner Dinamis (Lanjutan Soal 4)
+    Route::resource('partners', AdminPartnerController::class);
     
 });

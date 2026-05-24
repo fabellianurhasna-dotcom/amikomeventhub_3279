@@ -3,19 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory;
+    // 🌟 Pastikan 'slug' ada di dalam array fillable ini
+    protected $fillable = ['name', 'slug']; 
 
-    // Mengizinkan seeder/form mengisi kolom name dan slug
-    protected $fillable = [
-        'name',
-        'slug',
-    ];
-
-    // Relasi ke tabel events (Satu kategori punya banyak event)
     public function events()
     {
         return $this->hasMany(Event::class);
