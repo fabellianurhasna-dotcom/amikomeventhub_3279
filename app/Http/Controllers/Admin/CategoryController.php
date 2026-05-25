@@ -33,7 +33,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * 2. HALAMAN FORM: Menampilkan form tambah kategori baru
+     * 2. HALAMAN FORM TAMBAH: Menampilkan form tambah kategori baru
      */
     public function create()
     {
@@ -60,7 +60,34 @@ class CategoryController extends Controller
     }
 
     /**
-     * 4. PROSES HAPUS: Menghapus data kategori dari database
+     * 4. HALAMAN FORM EDIT: Menampilkan data lama untuk diubah
+     */
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', compact('category'));
+    }
+
+    /**
+     * 5. PROSES UPDATE: Memperbarui data nama & regenerasi slug otomatis
+     */
+    public function update(Request $request, Category $category)
+    {
+        $request->validate([
+            // Unik di tabel categories kolom name, kecuali milik id yang sedang diedit ini
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+        ]);
+
+        $category->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Kategori berhasil diperbarui!');
+    }
+
+    /**
+     * 6. PROSES HAPUS: Menghapus data kategori dari database
      */
     public function destroy(Category $category)
     {
