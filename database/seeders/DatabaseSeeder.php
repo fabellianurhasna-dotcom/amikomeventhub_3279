@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Event;
+use Illuminate\Support\Facades\Hash; // Tambahkan import Hash untuk keamanan password
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,11 +18,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Akun Admin Utama
+        // 1. Akun Admin Utama untuk Login Pertemuan 8
         User::create([
             'name' => 'Admin Amikom',
             'email' => 'admin@amikom.ac.id',
-            'password' => bcrypt('password'),
+            'password' => Hash::make('password'), // Mengubah bcrypt menjadi Hash::make (lebih direkomendasikan di Laravel terbaru)
             'role' => 'admin',
         ]);
 
@@ -31,12 +32,12 @@ class DatabaseSeeder extends Seeder
             'slug' => 'seminar-it',
         ]);
 
-        // 3. Insert Event 1 (Bagian yang sebelumnya terpotong/error)
+        // 3. Insert Event 1
         Event::create([
             'category_id' => $category->id,
-            'title' => 'Judul Event Inkubator', // Silakan ubah judul ini
-            'description' => 'Deskripsi untuk event inkubator.', // Silakan ubah deskripsi ini
-            'date' => '2026-04-30 09:00:00', // Silakan ubah tanggal ini
+            'title' => 'Judul Event Inkubator',
+            'description' => 'Deskripsi untuk event inkubator.',
+            'date' => '2026-04-30 09:00:00',
             'location' => 'Inkubator Amikom',
             'price' => 50000,
             'stock' => 100,

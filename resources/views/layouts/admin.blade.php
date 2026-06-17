@@ -71,15 +71,27 @@
                 </nav>
             </div>
 
-            {{-- Info Akun Sederhana di Bagian Bawah Sidebar --}}
-            <div class="p-4 bg-slate-50 rounded-2xl flex items-center gap-3">
-                <div class="w-9 h-9 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center font-bold text-sm">
-                    AD
+            {{-- Info Akun Sederhana & TOMBOL LOGOUT TERINTEGRASI DI SINI --}}
+            <div class="p-4 bg-slate-50 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center font-bold text-sm">
+                        AD
+                    </div>
+                    <div>
+                        <p class="text-xs font-black text-slate-800">Administrator</p>
+                        <p class="text-[10px] font-medium text-slate-400">Ujian UTS Berjalan</p>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-xs font-black text-slate-800">Administrator</p>
-                    <p class="text-[10px] font-medium text-slate-400">Ujian UTS Berjalan</p>
-                </div>
+                
+                {{-- FORM LOGOUT FORMAL DAN AMAN --}}
+                <form action="{{ route('logout') }}" method="POST" class="flex items-center">
+                    @csrf
+                    <button type="submit" title="Keluar Aplikasi" class="w-8 h-8 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl flex items-center justify-center transition shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                    </button>
+                </form>
             </div>
         </aside>
 
