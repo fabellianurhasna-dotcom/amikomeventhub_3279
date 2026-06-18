@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 // Import Controller
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AuthController; // Tambahkan ini
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -17,11 +19,10 @@ use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-Route::view('/profil', 'layout.profil')->name('profil');
-
-Route::view('/katalog', 'layout.katalog')->name('katalog');
-Route::view('/bantuan', 'layout.bantuan')->name('bantuan');
-Route::view('/kontak', 'layout.kontak')->name('kontak');
+Route::view('/profil', 'profil')->name('profil');
+Route::view('/katalog', 'katalog')->name('katalog');
+Route::view('/bantuan', 'bantuan')->name('bantuan');
+Route::view('/kontak', 'kontak')->name('kontak');
 
 /* --- RUTE AUTHENTICATION (Login) --- */
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -30,8 +31,9 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout');
 
 /* --- RUTE DETAIL & TRANSAKSI --- */
 Route::get('/ticket', [TicketController::class, 'show'])->name('ticket');
-Route::view('/event/detail', 'layout.event-detail')->name('event.show');
-Route::view('/checkout', 'layout.checkout')->name('checkout');
+Route::get('/event/{event}', [EventController::class, 'show'])->name('event.show');
+Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
+Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
 
 /* --- RUTE ADMIN PANEL (DIPROTEKSI MIDDLEWARE) --- */
 // Semua rute di dalam group ini akan meminta login terlebih dahulu

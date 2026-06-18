@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(session('success'))
+        <div class="max-w-7xl mx-auto px-6 mt-24">
+            <div class="rounded-[2rem] bg-emerald-50 border border-emerald-100 p-6 text-emerald-900 shadow-sm">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
     <section class="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-12">
         <div class="flex-1 space-y-8">
             <span class="inline-block px-4 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold uppercase tracking-wider">
@@ -93,7 +101,7 @@
                             <span class="text-2xl font-black text-indigo-600">
                                 {{ $event->price == 0 ? 'Gratis' : 'Rp ' . number_format($event->price, 0, ',', '.') }}
                             </span>
-                            <a href="{{ route('event.show', ['id' => $event->id]) }}" class="px-5 py-2 bg-indigo-50 text-indigo-600 rounded-xl font-bold hover:bg-indigo-600 hover:text-white transition">
+                            <a href="{{ route('event.show', $event) }}" class="px-5 py-2 bg-indigo-50 text-indigo-600 rounded-xl font-bold hover:bg-indigo-600 hover:text-white transition">
                                 Lihat Detail
                             </a>
                         </div>

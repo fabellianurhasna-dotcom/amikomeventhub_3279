@@ -34,4 +34,9 @@ class Event extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Event;
 
 class EventController extends Controller
 {
-    public function index()
+    public function show(Event $event)
     {
-        return view('admin.events');
+        return view('event-detail', compact('event'));
     }
 }

@@ -61,6 +61,14 @@
                         <span>Kelola Event</span>
                     </a>
 
+                    <a href="{{ route('admin.transactions.index') }}" 
+                       class="flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 {{ request()->routeIs('admin.transactions.index') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M12 4v16m-6-6h12"></path>
+                        </svg>
+                        <span>Laporan Transaksi</span>
+                    </a>
+
                     <a href="{{ route('admin.partners.index') }}" 
                        class="flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 {{ request()->routeIs('admin.partners.*') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
