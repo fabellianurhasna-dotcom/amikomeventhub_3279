@@ -40,26 +40,22 @@ Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('ch
 // Semua rute di dalam group ini akan meminta login terlebih dahulu
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
 
-   
-
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 
     Route::resource('events', AdminEventController::class);
 
-
-
-
     Route::resource('categories', CategoryController::class);
-
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     Route::resource('partners', AdminPartnerController::class);
 
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-
-    // Rute untuk menerima notifikasi status pembayaran dari Midtrans
-    Route::post('/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
     
+});
+
+/* --- RUTE CALLBACK MIDTRANS (TANPA AUTH) --- */
+// Dipisahkan agar Midtrans bisa mengirim status pembayaran tanpa perlu login
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::post('/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
 });
