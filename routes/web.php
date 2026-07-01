@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
+use App\Http\Controllers\OrderController;
 
 /* --- RUTE PUBLIK --- */
 
@@ -55,5 +56,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     Route::resource('partners', AdminPartnerController::class);
+
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+    // Rute untuk menerima notifikasi status pembayaran dari Midtrans
+    Route::post('/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
     
 });
