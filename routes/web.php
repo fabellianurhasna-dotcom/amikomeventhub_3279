@@ -60,6 +60,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 
     // Rute untuk menerima notifikasi status pembayaran dari Midtrans
-    Route::post('admin/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
+    Route::post('admin/midtrans/callback', [CheckoutController::class, 'callback'])->name('admin.midtrans.callback');
     
 });
