@@ -41,7 +41,7 @@ Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('ch
 Route::get('/checkout/success/{transaction:order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 
 // Rute Webhook/Callback Midtrans (Di luar grup admin agar tidak terkunci login)
-Route::post('/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
+Route::post('admin/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
 
 
 
