@@ -7,13 +7,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\AuthController; // Tambahkan ini
+use App\Http\Controllers\AuthController; 
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\PartnerController as AdminPartnerController;
 use App\Http\Controllers\OrderController;
+
 
 /* --- RUTE PUBLIK --- */
 
@@ -28,7 +29,7 @@ Route::view('/kontak', 'kontak')->name('kontak');
 /* --- RUTE AUTHENTICATION (Login) --- */
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/admin/login', [AuthController::class, 'login']);
-Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout'); // Tambahkan logout
+Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout'); 
 
 /* --- RUTE DETAIL & TRANSAKSI --- */
 Route::get('/ticket', [TicketController::class, 'show'])->name('ticket');
@@ -36,20 +37,25 @@ Route::get('/event/{event}', [EventController::class, 'show'])->name('event.show
 Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
 Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
 
+// Rute Tampilan Sukses Pembayaran
+Route::get('/checkout/success/{transaction:order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
+
+// Rute Webhook/Callback Midtrans (Di luar grup admin agar tidak terkunci login)
+Route::post('/midtrans/callback', [CheckoutController::class, 'callback'])->name('midtrans.callback');
+
+
+
 /* --- RUTE ADMIN PANEL (DIPROTEKSI MIDDLEWARE) --- */
-// Semua rute di dalam group ini akan meminta login terlebih dahulu
+
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
 
-   
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
     Route::resource('events', AdminEventController::class);
 
-
-
-
+    
     Route::resource('categories', CategoryController::class);
 
 
@@ -58,8 +64,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('partners', AdminPartnerController::class);
 
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-
-    // Rute untuk menerima notifikasi status pembayaran dari Midtrans
-    Route::post('admin/midtrans/callback', [CheckoutController::class, 'callback'])->name('admin.midtrans.callback');
+   
     
 });

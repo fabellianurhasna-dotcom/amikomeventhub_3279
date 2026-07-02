@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Mencegah Laravel memblokir request masuk dari Midtrans karena tidak membawa CSRF token
         $middleware->validateCsrfTokens(except: [
-            'adminmidtrans/callback',
+            'midtrans/callback', // <--- Perbaikan di sini (hapus kata admin)
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

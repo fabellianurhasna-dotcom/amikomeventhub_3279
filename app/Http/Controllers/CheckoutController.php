@@ -86,13 +86,29 @@ class CheckoutController extends Controller
         try {
             $snapToken = Snap::getSnapToken($params);
             
+            // SIMPAN TOKEN KE DATABASE
+            $transaction->snap_token = $snapToken;
+            $transaction->save();
+            
             // Mengarahkan ke view checkout.payment bawa snapToken & data transaksi
             return view('checkout.payment', compact('transaction', 'snapToken', 'event'));
             
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
             // Jika midtrans gagal merespon karena salah key/jaringan, kembalikan dengan pesan error
             return back()->with('error', 'Gagal terhubung ke sistem pembayaran: ' . $e->getMessage())->withInput();
         }
+    }
+
+    /**
+     * Menampilkan halaman sukses setelah bayar
+     * Pastikan rute checkout.success di web.php terhubung ke method ini
+     */
+    public function success(Transaction $transaction)
+    {
+        // Memuat relasi data event agar bisa ditampilkan di halaman sukses
+        $transaction->load('event');
+        
+        return view('checkout.success', compact('transaction'));
     }
 
     /**

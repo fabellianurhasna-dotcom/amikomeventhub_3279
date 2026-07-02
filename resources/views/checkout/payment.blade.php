@@ -1,4 +1,6 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app') 
+
+@section('content')
 <div class="py-12 max-w-xl mx-auto px-4 text-center">
     <div class="bg-white rounded-3xl border border-slate-100 p-8 shadow-sm">
         <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -33,8 +35,8 @@
         // Memicu jendela pop-up Midtrans keluar otomatis menggunakan snapToken
         window.snap.pay('{{ $snapToken }}', {
             onSuccess: function(result){
-                alert("Pembayaran Berhasil!"); 
-                window.location.href = "/";
+                // PERBAIKAN: Mengarahkan otomatis ke halaman sukses membawa order_id
+                window.location.href = "{{ route('checkout.success', $transaction->order_id) }}";
             },
             onPending: function(result){
                 alert("Menunggu Pembayaran!"); 
