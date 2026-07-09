@@ -64,6 +64,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('partners', AdminPartnerController::class);
 
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+    Route::post('/midtrans/callback', [\App\Http\Controllers\MidtransWebhookController::class, 'handle']);
    
     
 });
