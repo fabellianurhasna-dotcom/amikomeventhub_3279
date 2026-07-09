@@ -14,11 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name'     => 'Administrator Amikom',
-            'email'    => 'admin@amikom.ac.id',
-            'password' => Hash::make('password123'), // Menggunakan Hash bawaan Laravel sesuai model Anda
-            'role'     => 'admin', // Mengisi kolom role sesuai struktur model Anda
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@amikom.ac.id'],
+            [
+                'name'     => 'Administrator Amikom',
+                'password' => Hash::make('password123'), // Menggunakan Hash bawaan Laravel sesuai model Anda
+                'role'     => 'admin', // Mengisi kolom role sesuai struktur model Anda
+            ]
+        );
     }
 }

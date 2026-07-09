@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Akun Admin Utama untuk Login Pertemuan 8
-        User::create([
-            'name' => 'Admin Amikom',
-            'email' => 'admin@amikom.ac.id',
-            'password' => Hash::make('password'), // Mengubah bcrypt menjadi Hash::make (lebih direkomendasikan di Laravel terbaru)
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@amikom.ac.id'],
+            [
+                'name' => 'Admin Amikom',
+                'password' => Hash::make('password'), // Mengubah bcrypt menjadi Hash::make (lebih direkomendasikan di Laravel terbaru)
+                'role' => 'admin',
+            ]
+        );
 
         // 2. Insert Kategori Event
         $category = Category::create([
