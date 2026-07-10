@@ -14,3 +14,4 @@ Tugas 8 : https://amikomeventhub-3279-main-z5obgb.free.laravel.cloud/admin/login
 Tugas 10 :https://amikomeventhub-3279-main-z5obgb.free.laravel.cloud/admin/transactions<br>
 Tugas 11 : https://amikomeventhub-3279-main-z5obgb.free.laravel.cloud/admin/transactions <br>
 Tugas 12 : https://amikomeventhub-3279-main-z5obgb.free.laravel.cloud/admin/dashboard <br>
+Tugas 13 : https://newamikomeventhub3279.gt.tc/ <br>
